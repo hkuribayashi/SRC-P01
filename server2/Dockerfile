@@ -11,6 +11,10 @@ RUN apt-get update \
 RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
 
 
-# Run eternal loop
-CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
+# Expor a porta 53 (DNS)
+EXPOSE 53/udp
+EXPOSE 53/tcp
 
+
+# Definir o comando para iniciar o BIND durante a inicialização
+CMD ["named", "-g", "-u", "bind"]
